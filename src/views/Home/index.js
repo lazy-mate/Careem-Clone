@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -8,11 +8,12 @@ function Home() {
 
     return (
         <View style={styles.container}>
-            <Text>Home Screen</Text>
-            <Button
+            <Text style={styles.homeText}>Home Screen</Text>
+            <Pressable
+            style={styles.button}
                 onPress={() => navigation.navigate('Destination')}
-                title = 'Navigate'
-            />
+            ><Text style={styles.buttonText}>Book Ride</Text>
+            </Pressable>
         </View>
     );
 }
@@ -24,5 +25,20 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    homeText:{
+        fontSize:40,
+        position:'absolute',
+        top: 100
+    },
+    button:{
+        padding: 60,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: 'green'
+    },
+    buttonText:{
+        fontSize: 20,
+        color: 'green'
     }
 })

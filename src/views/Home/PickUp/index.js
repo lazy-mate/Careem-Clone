@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker } from 'react-native-maps';
-import { View, Button, StyleSheet } from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import * as Location from 'expo-location';
 import { useNavigation } from "@react-navigation/native";
 
 
-function PickUp() {
+function PickUp({ route: { params: { destinationLocation } } }) {
+
     const [location, setLocation] = useState({
+        destinationLatitude: destinationLocation.latitude,
+        destinationLongitude: destinationLocation.longitude,
         latitude: 24.8952922,
         longitude: 67.0823298,
         latitudeDelta: 0.0001,
         longitudeDelta: 0.0001,
     })
     const [errorMsg, setErrorMsg] = useState(null)
+    console.log(location)
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -22,8 +26,7 @@ function PickUp() {
             }
 
             Location.watchPositionAsync({
-                distanceInterval: 0.1,
-                timeInterval: 100,
+                distanceInterval: 1,
             }, (response) => {
                 const { coords: { latitude, longitude } } = response
                 setLocation({ ...location, latitude, longitude })
@@ -31,7 +34,7 @@ function PickUp() {
         })();
     }, []);
 
-const navigation = useNavigation();
+    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
@@ -41,14 +44,15 @@ const navigation = useNavigation();
             >
                 <Marker
                     coordinate={location}
-                    title={'Stadium'}
-                    description={'Bara wala stadium'}
+                    pinColor={'green'}
                 />
             </MapView>
-            <Button
-                onPress={() => navigation.navigate('CarSelection')}
-                title={'Confirm Pick Up'}
-            />
+            <Pressable
+                onPress={() => navigation.navigate('CarSelection', { locations: location })}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText}>Confirm Pick Up</Text>
+            </Pressable>
         </View>
     );
 }
@@ -63,6 +67,19 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '80%'
-    }
+        height: '90%'
+    },
+    button: {
+        backgroundColor: 'green',
+        padding: 20,
+        marginTop: 10,
+        width: '90%',
+        borderRadius: 10,
+        alignItems: 'center'
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
 })
