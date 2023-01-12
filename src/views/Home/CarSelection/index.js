@@ -77,7 +77,7 @@ function CarSelection({ route: { params: { location } } }) {
                     horizontal={true}
                 >
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Summary', { summary: { location, distance: vehiclesAndFares } })}
+                        onPress={() => navigation.navigate('Summary', { summary: { location, vehicle: 'Bike', fare: vehiclesAndFares.bikeFare, distance: vehiclesAndFares.distance } })}
                         style={styles.itemsContainer}>
                         <View style={styles.items}>
                             <Image
@@ -90,7 +90,7 @@ function CarSelection({ route: { params: { location } } }) {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Summary', { summary: { location, distance: vehiclesAndFares } })}
+                        onPress={() => navigation.navigate('Summary', { summary: { location, vehicle: 'Rickshaw', fare: vehiclesAndFares.ricksahawFare, distance: vehiclesAndFares.distance } })}
                         style={styles.itemsContainer}>
                         <View style={styles.items}>
                             <Image
@@ -103,7 +103,7 @@ function CarSelection({ route: { params: { location } } }) {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Summary', { summary: { location, distance: vehiclesAndFares } })}
+                        onPress={() => navigation.navigate('Summary', { summary: { location, vehicle: 'Car', fare: vehiclesAndFares.carFare, distance: vehiclesAndFares.distance } })}
                         style={styles.itemsContainer}>
                         <View style={styles.items}>
                             <Image
