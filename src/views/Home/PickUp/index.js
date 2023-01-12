@@ -8,14 +8,16 @@ import { useNavigation } from "@react-navigation/native";
 function PickUp({ route: { params: { destinationLocation } } }) {
 
     const [location, setLocation] = useState({
-        destinationLatitude: destinationLocation.latitude,
-        destinationLongitude: destinationLocation.longitude,
         latitude: 24.8952922,
         longitude: 67.0823298,
         latitudeDelta: 0.0001,
         longitudeDelta: 0.0001,
     })
     const [errorMsg, setErrorMsg] = useState(null)
+    const destinationCoords = {
+        latitude: destinationLocation.latitude,
+        longitude: destinationLocation.longitude,
+    }
     console.log(location)
     useEffect(() => {
         (async () => {
@@ -40,6 +42,7 @@ function PickUp({ route: { params: { destinationLocation } } }) {
         <View style={styles.container}>
             <MapView
                 region={location}
+                loadingEnabled={true}
                 style={styles.map}
             >
                 <Marker
@@ -48,7 +51,7 @@ function PickUp({ route: { params: { destinationLocation } } }) {
                 />
             </MapView>
             <Pressable
-                onPress={() => navigation.navigate('CarSelection', { locations: location })}
+                onPress={() => navigation.navigate('CarSelection', { location: { pickUpCoords: location, destinationCoords: destinationCoords } })}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>Confirm Pick Up</Text>
